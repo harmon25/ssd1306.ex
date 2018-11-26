@@ -50,7 +50,7 @@ defmodule SSD1306.Display do
     # One row is 8 pixels
     img = :egd.create(@width, 8*rows)
     #Anyone knows any other fonts that work here? btw. it shrinks with canvas size, but it's never larger than 11px
-    path = :filename.join([:code.priv_dir(:percept), "fonts", "6x11_latin1.wingsfont"])
+    path = :filename.join([:code.priv_dir(:egd), "fonts", "6x11_latin1.wingsfont"])
     font = :egd_font.load(path)
     color = :egd.color(:black) #whatever
 
