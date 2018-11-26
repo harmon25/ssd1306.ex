@@ -11,7 +11,7 @@ defmodule SSD1306.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :elixir_ale, :percept],
+    [applications: [:logger, :elixir_ale],
      mod: {SSD1306, []}]
   end
   
