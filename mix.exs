@@ -17,7 +17,7 @@ defmodule SSD1306.Mixfile do
   
   defp deps do
     [
-      {:elixir_ale, "~> 0.5.5"},
+      {:elixir_ale, "~> 1.2"},
       {:egd, github: "erlang/egd"}
     ]
   end

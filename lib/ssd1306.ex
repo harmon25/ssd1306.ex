@@ -8,7 +8,7 @@ defmodule SSD1306 do
 
     def start(_type, _args) do
         import Supervisor.Spec, warn: false
-
+	:timer.sleep(250)
         arg = Application.get_env(:ssd1306, :device, %{bus: "i2c-1", address: 0x3c, reset_pin: 24, commands: []})
         state = Application.get_env(:ssd1306, :initial_state, {"HELLO", ["", "", "", "", "", ""]})
 

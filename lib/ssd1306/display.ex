@@ -79,11 +79,11 @@ defmodule SSD1306.Display do
   defp draw_screen({headline, lines}) when is_list(lines) do
     head = get_label(headline, 2, true)
     lines
-      |> Enum.reverse
+      |> Enum.reverse()
       |> Enum.map(fn(line) -> get_label(line) end)
       |> Kernel.++(head)
-      |> List.flatten
-      |> display
+      |> List.flatten()
+      |> display()
   end
 
   @doc """
@@ -92,7 +92,7 @@ defmodule SSD1306.Display do
   defp all_on do
     1..@buffer_size
       |> Enum.map(fn (x) -> 255 end)
-      |> display
+      |> display()
   end
 
   @doc """
@@ -100,7 +100,7 @@ defmodule SSD1306.Display do
     Takes 2 lines.
   """
   defp draw_headline(text) do
-    get_label(text, 2, true) |> display
+    get_label(text, 2, true) |> display()
   end
 
   @doc """
@@ -133,9 +133,9 @@ defmodule SSD1306.Display do
   """
   defp display(frame) when is_list(frame) do
     frame
-      |> complement
-      |> :binary.list_to_bin
-      |> SSD1306.Device.display
+      |> complement()
+      |> :binary.list_to_bin()
+      |> SSD1306.Device.display()
   end
 
   @doc """
@@ -145,8 +145,8 @@ defmodule SSD1306.Display do
   defp convert_row(bitmap) when is_list(bitmap) do
     bitmap
       |> Enum.chunk(@width)
-      |> transpose
-      |> List.flatten
+      |> transpose()
+      |> List.flatten()
   end
 
   @doc """
