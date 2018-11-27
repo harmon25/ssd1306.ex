@@ -28,7 +28,7 @@ defmodule SSD1306.Display do
   #Callbacks
   def init([state]) do
     #state is {headline, [array of lines to display]}
-    state |> draw_screen
+    state |> draw_screen()
     {:ok, state}
   end
 
@@ -46,7 +46,7 @@ defmodule SSD1306.Display do
   end
 
   defp get_label(text, rows \\ 1, center \\ false) do
-    text = text |> to_charlist
+    text = text |> to_charlist()
     # One row is 8 pixels
     img = :egd.create(@width, 8*rows)
     #Anyone knows any other fonts that work here? btw. it shrinks with canvas size, but it's never larger than 11px
@@ -66,10 +66,10 @@ defmodule SSD1306.Display do
     bitmap = :egd.render(img, :raw_bitmap)
 
     bitmap
-      |> :binary.bin_to_list
-      |> monochrome
-      |> convert_row
-      |> pack_to_8bit
+      |> :binary.bin_to_list()
+      |> monochrome()
+      |> convert_row()
+      |> pack_to_8bit()
   end
 
   @doc """
@@ -86,7 +86,7 @@ defmodule SSD1306.Display do
       |> display()
   end
 
-  @doc """
+  @docp """
     Light the whole screen
   """
   defp all_on do
@@ -95,7 +95,7 @@ defmodule SSD1306.Display do
       |> display()
   end
 
-  @doc """
+  @docp """
     Draw a headline. Always centered and on the top.
     Takes 2 lines.
   """
@@ -103,7 +103,7 @@ defmodule SSD1306.Display do
     get_label(text, 2, true) |> display()
   end
 
-  @doc """
+  @docp """
     Draw a string at a selected line. The text is being truncated.
     Max string length is @width / 6. So ~21 characters for 128px wide screen
   """
@@ -112,7 +112,7 @@ defmodule SSD1306.Display do
     get_label(text) ++ get_empty(header_offset + 128*line) #|> display
   end
 
-  @doc """
+  @docp """
     Get any number of empty pixels to fill the bitmap.
   """
   defp get_empty(0), do: []
@@ -120,14 +120,14 @@ defmodule SSD1306.Display do
     1..size |> Enum.map (fn (_) -> @bg_color end)
   end
 
-  @doc """
+  @docp """
     Complements the bitmap to 1024 bytes
   """
   defp complement(bitmap) when is_list(bitmap) do
     get_empty(@buffer_size - Enum.count(bitmap)) ++ bitmap
   end
 
-  @doc """
+  @docp """
     Send a ready frame to the device.
     Should be of length width * height / 8 - because we squeeze 8 pixels on one byte
   """
@@ -138,7 +138,7 @@ defmodule SSD1306.Display do
       |> SSD1306.Device.display()
   end
 
-  @doc """
+  @docp """
     Convert a normal bitmap of size 128x8 to OLED compatible bitmap.
     OLEDs start counting from left-bottom corner and go up to 8, then move right..
   """
@@ -149,7 +149,7 @@ defmodule SSD1306.Display do
       |> List.flatten()
   end
 
-  @doc """
+  @docp """
   Transforsms RBG bitmap to a monochrome one.
   Resulting in 3 times shorter list.
   Whatever was black is black, other color will be highlighted.
@@ -160,7 +160,7 @@ defmodule SSD1306.Display do
       |> Enum.map(fn([r,g,b]) -> if r + g + b > 0 do @bg_color else 1 - @bg_color end end)
   end
 
-  @doc """
+  @docp """
     This function write 8 continous bytes into a sigle byte.
     The bitmap is expect to be monochome.
     Resulting list is 8 times shorter.
@@ -171,7 +171,7 @@ defmodule SSD1306.Display do
       |> Enum.map(fn(bits) -> elem(Enum.reduce(bits, {7,0}, fn (x, {i, acc}) -> {i-1, acc ||| x <<< i} end), 1) end)
   end
 
-  @doc """
+  @docp """
     Transpose matrix (aka switch columns with rows)
   """
   defp transpose([[]|_]), do: []
